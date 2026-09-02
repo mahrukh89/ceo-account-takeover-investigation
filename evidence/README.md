@@ -6,15 +6,14 @@ Add your screenshots to this folder using the exact names below. **Do not upload
 |---|---|---|---|
 | 01 | `01-adx-environment.png` | ADX opened | Cluster + database context |
 | 02 | `02-database-table.png` | Database/table created | `CEOAccountTakeoverDB` and `SigninLogs_CL` |
-| 03 | `03-csv-ingestion-preview.png` | During CSV upload | File name + column preview/mapping |
-| 04 | `04-ingestion-success.png` | After ingestion | Successful ingestion/result |
-| 05 | `05-raw-data.png` | Run `SigninLogs_CL \| take 10` | Query + returned rows |
-| 06 | `06-ceo-baseline.png` | Run baseline query | Query + baseline results |
-| 07 | `07-suspicious-ceo-login.png` | Run suspicious-login query | Query + suspicious CEO event |
-| 08 | `08-password-spray.png` | Run spray hunt | Query + IP/failed attempts/distinct users |
-| 09 | `09-spray-to-success.png` | Run pivot | Query + source IP linked to success |
-| 10 | `10-comparison-event.png` | Run benign comparison | Query + colleague/normal event |
-
+| 03 | `03-ceo-baseline.png` | Run CEO profile query | CEO identity details (`UserPrincipalName`, `NormalLocation`, `NormalDevice`) |
+| 04 | `04-ceo-normal-baseline.png` | Run normal login baseline | Aggregated successful logins, locations, and normal devices |
+| 05 | `05-password-spray-hunt.png` | Run spray hunt query | Top source IPs (`IPAddress`), `TargetedAccounts`, `Attempts`, and date ranges |
+| 06 | `06-password-spray-evidence.png` | Run spray evidence query | Failed attempts (`50126`), attacker IP (`102.89.44.17`), and targeted application |
+| 07 | `07-ceo-targeted.png` | Run targeted attack query | Detailed failed login events for `ceo@cloudora.com` |
+| 08 | `08-ceo-compromise.png` | Run compromise query | Successful high-risk logins (`atRisk`, `Linux`, `Chrome 116.0`) from attacker IP |
+| 09 | `09-post-compromise-activity.png` | Run timeline comparison | Sequence comparing normal Lahore/Windows logins to Lagos/Linux activity |
+| 10 | `10-kql-correlation.png` | Run KQL correlation query | Stage tagging (`Password Spray - Other A
 ## Screenshot rules
 
 - Keep the **KQL query and result grid visible in the same screenshot** whenever possible.
