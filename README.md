@@ -210,6 +210,7 @@ This is a **portfolio/lab investigation**, not a production incident response ca
 │   └── 04-spray-to-success-pivot.kql
 ├── evidence/
 │   └── README.md
+        └── screenshots/
 ├── incident-report/
 │   └── incident-report.md
 ├── investigation/
@@ -223,8 +224,6 @@ This is a **portfolio/lab investigation**, not a production incident response ca
 ├── simulation/
 │   ├── README.md
 │   └── simulated-signins.json
-├── screenshots/
-│   └── README.md
 ├── .gitignore
 ├── LICENSE
 └── README.md
