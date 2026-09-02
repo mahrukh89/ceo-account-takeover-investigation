@@ -1,0 +1,19 @@
+// 05 - Post-Compromise Mailbox Rule Hunt
+// Purpose: Check whether the attacker added inbox rules (forwarding, auto-delete,
+// hide-and-forward) after gaining access to the CEO mailbox - a common
+// Business Email Compromise (BEC) follow-on action.
+// Maps to: MITRE T1114.003 - Email Collection: Email Forwarding Rule
+
+OfficeActivity
+| where TimeGenerated > ago(2d)
+| where Operation in ("New-InboxRule", "Set-InboxRule", "Set-Mailbox", "UpdateInboxRules")
+| where UserId =~ "ceo@company.com"
+| project TimeGenerated, Operation, UserId, Parameters, ClientIP, ResultStatus
+| order by TimeGenerated asc
+
+// -- Follow-up: if a forwarding rule is found, extract the forwarding target --
+// OfficeActivity
+// | where Operation == "New-InboxRule"
+// | where UserId =~ "ceo@company.com"
+// | extend RuleParams = parse_json(Parameters)
+// | project TimeGenerated, RuleParams

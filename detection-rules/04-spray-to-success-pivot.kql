@@ -1,0 +1,23 @@
+// 04 — Spray-to-Success Pivot
+// Platform: Azure Data Explorer
+// Purpose: determine whether a spray source later achieved a successful login.
+// Maps to MITRE ATT&CK T1078 — Valid Accounts.
+
+let SprayIPs =
+    SigninLogs_CL
+    | where ResultType == 50126
+    | where TimeGenerated between (ago(7d) .. now())
+    | summarize FailedAttempts=count(), DistinctUsers=dcount(UserPrincipalName)
+      by IPAddress
+    | where FailedAttempts >= 20 and DistinctUsers >= 5
+    | project IPAddress;
+
+SigninLogs_CL
+| where IPAddress in (SprayIPs)
+| summarize
+    SuccessfulLogins = countif(ResultType == 0),
+    FailedLogins = countif(ResultType == 50126),
+    AccountsSeen = make_set(UserPrincipalName, 20)
+  by IPAddress
+| where SuccessfulLogins > 0
+| order by SuccessfulLogins desc

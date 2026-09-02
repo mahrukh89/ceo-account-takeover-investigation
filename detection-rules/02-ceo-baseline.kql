@@ -1,0 +1,18 @@
+// 02 — CEO Authentication Baseline
+// Platform: Azure Data Explorer
+// Purpose: establish normal geography and sign-in timing before declaring an anomaly.
+
+let CEO = SigninLogs_CL
+| where UserPrincipalName =~ "ceo@company.com"
+| where ResultType == 0;
+
+// Geographic baseline
+CEO
+| summarize LoginCount=count() by Location
+| order by LoginCount desc;
+
+// Hour-of-day baseline
+CEO
+| extend HourOfDay = datetime_part("Hour", TimeGenerated)
+| summarize LoginCount=count() by HourOfDay
+| order by HourOfDay asc
