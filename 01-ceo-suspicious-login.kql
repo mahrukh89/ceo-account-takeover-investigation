@@ -1,0 +1,14 @@
+// 01 — Suspicious CEO Login
+// Platform: Azure Data Explorer
+// Purpose: identify successful CEO sign-ins from unusual locations.
+// Table convention: SigninLogs_CL
+
+SigninLogs_CL
+| where UserPrincipalName =~ "ceo@company.com"
+| where TimeGenerated > ago(7d)
+| where ResultType == 0
+| where Location !in~ ("US", "GB")
+| project TimeGenerated, UserPrincipalName, IPAddress, Location,
+          AppDisplayName, DeviceDetail_OperatingSystem, IsInteractive,
+          CorrelationId
+| order by TimeGenerated asc
